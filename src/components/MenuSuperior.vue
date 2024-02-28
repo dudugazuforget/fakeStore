@@ -20,7 +20,6 @@ const menuAberto = ref(false);
           <li>Jóias</li>
           <li>Masculino</li>
           <li>Feminino</li>
-          <li>Perfumes</li>
         </ul>
       </nav>
       <div class="header--icons">

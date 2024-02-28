@@ -3,11 +3,22 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const produtos = ref([]);
+const descricao = ref(false);
 
 onMounted(async () => {
   const response = await axios.get('https://fakestoreapi.com/products');
   produtos.value = response.data;
 });
+
+function mostrardescricao (){
+  if(descricao.value == true){
+    descricao.value = false
+  }
+  else{
+    descricao.value = true
+  }
+
+};
 
 const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
 </script>
@@ -18,9 +29,10 @@ const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
     <div class="container">
       <div class="card" v-for="produto in produtos" :key="produto.id">
         <h1 class="card--title">{{ produto.title }}</h1>
-        <p>{{ produto.description }}</p>
         <p>{{ formatPrice(produto.price) }}</p>
         <img class="card--avatar" :src="produto.image" :alt="produto.title" />
+        <p v-if="descricao" class="descricao">{{  produto.description }}</p>
+        <button @click="mostrardescricao">descricao</button>
       </div>
     </div>
   </div>
@@ -49,8 +61,8 @@ const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
   overflow: hidden;
 }
 .card--avatar {
-  width: 100%;
-  height: 17rem;
+  width: 70%;
+  height: 12rem;
   object-fit: cover;
   margin-bottom: 0.5rem;
 }
@@ -74,5 +86,9 @@ const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
   .card {
     width: 22rem;
   }
+}
+.descricao{
+  width: 70%;
+  height: 60%;
 }
 </style>
